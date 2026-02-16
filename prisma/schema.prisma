@@ -1,0 +1,121 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["partialIndexes"]
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -------------------------------------------------
+// PUBLIC TABLOLARIMIZ
+// -------------------------------------------------
+
+model profiles {
+  id           String         @id @db.Uuid
+  full_name    String?
+  email        String?
+  avatar_url   String?
+  created_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  appointments appointments[]
+  pets         pets[]
+}
+
+model clinics {
+  id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name            String
+  address         String
+  phone_number    String?
+  rating          Decimal?          @default(0.0) @db.Decimal(2, 1)
+  is_open_24_7    Boolean?          @default(false)
+  latitude        Float?
+  longitude       Float?
+  created_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  appointments    appointments[]
+  medical_records medical_records[]
+}
+
+model pets {
+  id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  owner_id        String            @db.Uuid
+  name            String
+  species         String
+  breed           String?
+  gender          String?
+  birth_date      DateTime?         @db.Date
+  weight          Decimal?          @db.Decimal(4, 2)
+  chip_number     String?
+  avatar_url      String?
+  created_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  appointments    appointments[]
+  medical_records medical_records[]
+  profiles        profiles          @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vaccinations    vaccinations[]
+}
+
+model appointments {
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  clinic_id        String             @db.Uuid
+  pet_id           String             @db.Uuid
+  owner_id         String             @db.Uuid
+  appointment_date DateTime           @db.Timestamptz(6)
+  reason           String?
+  status           appointment_status? @default(reserved)
+  expires_at       DateTime?          @db.Timestamptz(6)
+  created_at       DateTime?          @default(now()) @db.Timestamptz(6)
+  clinics          clinics            @relation(fields: [clinic_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profiles         profiles           @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pets             pets               @relation(fields: [pet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model medical_records {
+  id          String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pet_id      String      @db.Uuid
+  clinic_id   String?     @db.Uuid
+  title       String
+  type        record_type
+  file_url    String
+  vet_notes   String?
+  record_date DateTime?   @default(dbgenerated("CURRENT_DATE")) @db.Date
+  created_at  DateTime?   @default(now()) @db.Timestamptz(6)
+  clinics     clinics?    @relation(fields: [clinic_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pets        pets        @relation(fields: [pet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model vaccinations {
+  id                String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pet_id            String          @db.Uuid
+  vaccine_name      String
+  administered_date DateTime?       @db.Date
+  next_due_date     DateTime?       @db.Date
+  status            vaccine_status? @default(upcoming)
+  notes             String?
+  created_at        DateTime?       @default(now()) @db.Timestamptz(6)
+  pets              pets            @relation(fields: [pet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+// -------------------------------------------------
+// ENUMLAR (SABİT TİPLER)
+// -------------------------------------------------
+
+enum appointment_status {
+  reserved
+  pending
+  confirmed
+  completed
+  cancelled
+}
+
+enum record_type {
+  image
+  pdf
+}
+
+enum vaccine_status {
+  completed
+  upcoming
+  overdue
+}
