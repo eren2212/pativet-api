@@ -45,6 +45,7 @@ export type PetsMinAggregateOutputType = {
   weight: runtime.Decimal | null
   chip_number: string | null
   avatar_url: string | null
+  deleted_at: Date | null
   created_at: Date | null
 }
 
@@ -59,6 +60,7 @@ export type PetsMaxAggregateOutputType = {
   weight: runtime.Decimal | null
   chip_number: string | null
   avatar_url: string | null
+  deleted_at: Date | null
   created_at: Date | null
 }
 
@@ -73,6 +75,7 @@ export type PetsCountAggregateOutputType = {
   weight: number
   chip_number: number
   avatar_url: number
+  deleted_at: number
   created_at: number
   _all: number
 }
@@ -97,6 +100,7 @@ export type PetsMinAggregateInputType = {
   weight?: true
   chip_number?: true
   avatar_url?: true
+  deleted_at?: true
   created_at?: true
 }
 
@@ -111,6 +115,7 @@ export type PetsMaxAggregateInputType = {
   weight?: true
   chip_number?: true
   avatar_url?: true
+  deleted_at?: true
   created_at?: true
 }
 
@@ -125,6 +130,7 @@ export type PetsCountAggregateInputType = {
   weight?: true
   chip_number?: true
   avatar_url?: true
+  deleted_at?: true
   created_at?: true
   _all?: true
 }
@@ -226,6 +232,7 @@ export type PetsGroupByOutputType = {
   weight: runtime.Decimal | null
   chip_number: string | null
   avatar_url: string | null
+  deleted_at: Date | null
   created_at: Date | null
   _count: PetsCountAggregateOutputType | null
   _avg: PetsAvgAggregateOutputType | null
@@ -263,11 +270,13 @@ export type petsWhereInput = {
   weight?: Prisma.DecimalNullableFilter<"pets"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.StringNullableFilter<"pets"> | string | null
   avatar_url?: Prisma.StringNullableFilter<"pets"> | string | null
+  deleted_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
   appointments?: Prisma.AppointmentsListRelationFilter
   medical_records?: Prisma.Medical_recordsListRelationFilter
   profiles?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
   vaccinations?: Prisma.VaccinationsListRelationFilter
+  default_for?: Prisma.ProfilesListRelationFilter
 }
 
 export type petsOrderByWithRelationInput = {
@@ -281,11 +290,13 @@ export type petsOrderByWithRelationInput = {
   weight?: Prisma.SortOrderInput | Prisma.SortOrder
   chip_number?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   appointments?: Prisma.appointmentsOrderByRelationAggregateInput
   medical_records?: Prisma.medical_recordsOrderByRelationAggregateInput
   profiles?: Prisma.profilesOrderByWithRelationInput
   vaccinations?: Prisma.vaccinationsOrderByRelationAggregateInput
+  default_for?: Prisma.profilesOrderByRelationAggregateInput
 }
 
 export type petsWhereUniqueInput = Prisma.AtLeast<{
@@ -302,11 +313,13 @@ export type petsWhereUniqueInput = Prisma.AtLeast<{
   weight?: Prisma.DecimalNullableFilter<"pets"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.StringNullableFilter<"pets"> | string | null
   avatar_url?: Prisma.StringNullableFilter<"pets"> | string | null
+  deleted_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
   appointments?: Prisma.AppointmentsListRelationFilter
   medical_records?: Prisma.Medical_recordsListRelationFilter
   profiles?: Prisma.XOR<Prisma.ProfilesScalarRelationFilter, Prisma.profilesWhereInput>
   vaccinations?: Prisma.VaccinationsListRelationFilter
+  default_for?: Prisma.ProfilesListRelationFilter
 }, "id">
 
 export type petsOrderByWithAggregationInput = {
@@ -320,6 +333,7 @@ export type petsOrderByWithAggregationInput = {
   weight?: Prisma.SortOrderInput | Prisma.SortOrder
   chip_number?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.petsCountOrderByAggregateInput
   _avg?: Prisma.petsAvgOrderByAggregateInput
@@ -342,6 +356,7 @@ export type petsScalarWhereWithAggregatesInput = {
   weight?: Prisma.DecimalNullableWithAggregatesFilter<"pets"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.StringNullableWithAggregatesFilter<"pets"> | string | null
   avatar_url?: Prisma.StringNullableWithAggregatesFilter<"pets"> | string | null
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"pets"> | Date | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"pets"> | Date | string | null
 }
 
@@ -355,11 +370,13 @@ export type petsCreateInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutPetsInput
   profiles: Prisma.profilesCreateNestedOneWithoutPetsInput
   vaccinations?: Prisma.vaccinationsCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUncheckedCreateInput = {
@@ -373,10 +390,12 @@ export type petsUncheckedCreateInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutPetsInput
   vaccinations?: Prisma.vaccinationsUncheckedCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesUncheckedCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUpdateInput = {
@@ -389,11 +408,13 @@ export type petsUpdateInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUpdateManyWithoutPetsNestedInput
   profiles?: Prisma.profilesUpdateOneRequiredWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateInput = {
@@ -407,10 +428,12 @@ export type petsUncheckedUpdateInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUncheckedUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUncheckedUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsCreateManyInput = {
@@ -424,6 +447,7 @@ export type petsCreateManyInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
 }
 
@@ -437,6 +461,7 @@ export type petsUpdateManyMutationInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -451,6 +476,7 @@ export type petsUncheckedUpdateManyInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -470,6 +496,7 @@ export type petsCountOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   chip_number?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -488,6 +515,7 @@ export type petsMaxOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   chip_number?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -502,6 +530,7 @@ export type petsMinOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   chip_number?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -513,6 +542,11 @@ export type PetsListRelationFilter = {
   every?: Prisma.petsWhereInput
   some?: Prisma.petsWhereInput
   none?: Prisma.petsWhereInput
+}
+
+export type PetsNullableScalarRelationFilter = {
+  is?: Prisma.petsWhereInput | null
+  isNot?: Prisma.petsWhereInput | null
 }
 
 export type petsOrderByRelationAggregateInput = {
@@ -554,6 +588,12 @@ export type petsCreateNestedManyWithoutProfilesInput = {
   connect?: Prisma.petsWhereUniqueInput | Prisma.petsWhereUniqueInput[]
 }
 
+export type petsCreateNestedOneWithoutDefault_forInput = {
+  create?: Prisma.XOR<Prisma.petsCreateWithoutDefault_forInput, Prisma.petsUncheckedCreateWithoutDefault_forInput>
+  connectOrCreate?: Prisma.petsCreateOrConnectWithoutDefault_forInput
+  connect?: Prisma.petsWhereUniqueInput
+}
+
 export type petsUncheckedCreateNestedManyWithoutProfilesInput = {
   create?: Prisma.XOR<Prisma.petsCreateWithoutProfilesInput, Prisma.petsUncheckedCreateWithoutProfilesInput> | Prisma.petsCreateWithoutProfilesInput[] | Prisma.petsUncheckedCreateWithoutProfilesInput[]
   connectOrCreate?: Prisma.petsCreateOrConnectWithoutProfilesInput | Prisma.petsCreateOrConnectWithoutProfilesInput[]
@@ -573,6 +613,16 @@ export type petsUpdateManyWithoutProfilesNestedInput = {
   update?: Prisma.petsUpdateWithWhereUniqueWithoutProfilesInput | Prisma.petsUpdateWithWhereUniqueWithoutProfilesInput[]
   updateMany?: Prisma.petsUpdateManyWithWhereWithoutProfilesInput | Prisma.petsUpdateManyWithWhereWithoutProfilesInput[]
   deleteMany?: Prisma.petsScalarWhereInput | Prisma.petsScalarWhereInput[]
+}
+
+export type petsUpdateOneWithoutDefault_forNestedInput = {
+  create?: Prisma.XOR<Prisma.petsCreateWithoutDefault_forInput, Prisma.petsUncheckedCreateWithoutDefault_forInput>
+  connectOrCreate?: Prisma.petsCreateOrConnectWithoutDefault_forInput
+  upsert?: Prisma.petsUpsertWithoutDefault_forInput
+  disconnect?: Prisma.petsWhereInput | boolean
+  delete?: Prisma.petsWhereInput | boolean
+  connect?: Prisma.petsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.petsUpdateToOneWithWhereWithoutDefault_forInput, Prisma.petsUpdateWithoutDefault_forInput>, Prisma.petsUncheckedUpdateWithoutDefault_forInput>
 }
 
 export type petsUncheckedUpdateManyWithoutProfilesNestedInput = {
@@ -613,10 +663,12 @@ export type petsCreateWithoutAppointmentsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutPetsInput
   profiles: Prisma.profilesCreateNestedOneWithoutPetsInput
   vaccinations?: Prisma.vaccinationsCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUncheckedCreateWithoutAppointmentsInput = {
@@ -630,9 +682,11 @@ export type petsUncheckedCreateWithoutAppointmentsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutPetsInput
   vaccinations?: Prisma.vaccinationsUncheckedCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesUncheckedCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsCreateOrConnectWithoutAppointmentsInput = {
@@ -661,10 +715,12 @@ export type petsUpdateWithoutAppointmentsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   medical_records?: Prisma.medical_recordsUpdateManyWithoutPetsNestedInput
   profiles?: Prisma.profilesUpdateOneRequiredWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateWithoutAppointmentsInput = {
@@ -678,9 +734,11 @@ export type petsUncheckedUpdateWithoutAppointmentsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUncheckedUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUncheckedUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsCreateWithoutMedical_recordsInput = {
@@ -693,10 +751,12 @@ export type petsCreateWithoutMedical_recordsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutPetsInput
   profiles: Prisma.profilesCreateNestedOneWithoutPetsInput
   vaccinations?: Prisma.vaccinationsCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUncheckedCreateWithoutMedical_recordsInput = {
@@ -710,9 +770,11 @@ export type petsUncheckedCreateWithoutMedical_recordsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutPetsInput
   vaccinations?: Prisma.vaccinationsUncheckedCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesUncheckedCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsCreateOrConnectWithoutMedical_recordsInput = {
@@ -741,10 +803,12 @@ export type petsUpdateWithoutMedical_recordsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutPetsNestedInput
   profiles?: Prisma.profilesUpdateOneRequiredWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateWithoutMedical_recordsInput = {
@@ -758,9 +822,11 @@ export type petsUncheckedUpdateWithoutMedical_recordsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUncheckedUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUncheckedUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsCreateWithoutProfilesInput = {
@@ -773,10 +839,12 @@ export type petsCreateWithoutProfilesInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutPetsInput
   vaccinations?: Prisma.vaccinationsCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUncheckedCreateWithoutProfilesInput = {
@@ -789,10 +857,12 @@ export type petsUncheckedCreateWithoutProfilesInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutPetsInput
   vaccinations?: Prisma.vaccinationsUncheckedCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesUncheckedCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsCreateOrConnectWithoutProfilesInput = {
@@ -803,6 +873,47 @@ export type petsCreateOrConnectWithoutProfilesInput = {
 export type petsCreateManyProfilesInputEnvelope = {
   data: Prisma.petsCreateManyProfilesInput | Prisma.petsCreateManyProfilesInput[]
   skipDuplicates?: boolean
+}
+
+export type petsCreateWithoutDefault_forInput = {
+  id?: string
+  name: string
+  species: string
+  breed?: string | null
+  gender?: string | null
+  birth_date?: Date | string | null
+  weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  chip_number?: string | null
+  avatar_url?: string | null
+  deleted_at?: Date | string | null
+  created_at?: Date | string | null
+  appointments?: Prisma.appointmentsCreateNestedManyWithoutPetsInput
+  medical_records?: Prisma.medical_recordsCreateNestedManyWithoutPetsInput
+  profiles: Prisma.profilesCreateNestedOneWithoutPetsInput
+  vaccinations?: Prisma.vaccinationsCreateNestedManyWithoutPetsInput
+}
+
+export type petsUncheckedCreateWithoutDefault_forInput = {
+  id?: string
+  owner_id: string
+  name: string
+  species: string
+  breed?: string | null
+  gender?: string | null
+  birth_date?: Date | string | null
+  weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  chip_number?: string | null
+  avatar_url?: string | null
+  deleted_at?: Date | string | null
+  created_at?: Date | string | null
+  appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutPetsInput
+  medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutPetsInput
+  vaccinations?: Prisma.vaccinationsUncheckedCreateNestedManyWithoutPetsInput
+}
+
+export type petsCreateOrConnectWithoutDefault_forInput = {
+  where: Prisma.petsWhereUniqueInput
+  create: Prisma.XOR<Prisma.petsCreateWithoutDefault_forInput, Prisma.petsUncheckedCreateWithoutDefault_forInput>
 }
 
 export type petsUpsertWithWhereUniqueWithoutProfilesInput = {
@@ -835,7 +946,55 @@ export type petsScalarWhereInput = {
   weight?: Prisma.DecimalNullableFilter<"pets"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.StringNullableFilter<"pets"> | string | null
   avatar_url?: Prisma.StringNullableFilter<"pets"> | string | null
+  deleted_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"pets"> | Date | string | null
+}
+
+export type petsUpsertWithoutDefault_forInput = {
+  update: Prisma.XOR<Prisma.petsUpdateWithoutDefault_forInput, Prisma.petsUncheckedUpdateWithoutDefault_forInput>
+  create: Prisma.XOR<Prisma.petsCreateWithoutDefault_forInput, Prisma.petsUncheckedCreateWithoutDefault_forInput>
+  where?: Prisma.petsWhereInput
+}
+
+export type petsUpdateToOneWithWhereWithoutDefault_forInput = {
+  where?: Prisma.petsWhereInput
+  data: Prisma.XOR<Prisma.petsUpdateWithoutDefault_forInput, Prisma.petsUncheckedUpdateWithoutDefault_forInput>
+}
+
+export type petsUpdateWithoutDefault_forInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  species?: Prisma.StringFieldUpdateOperationsInput | string
+  breed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointments?: Prisma.appointmentsUpdateManyWithoutPetsNestedInput
+  medical_records?: Prisma.medical_recordsUpdateManyWithoutPetsNestedInput
+  profiles?: Prisma.profilesUpdateOneRequiredWithoutPetsNestedInput
+  vaccinations?: Prisma.vaccinationsUpdateManyWithoutPetsNestedInput
+}
+
+export type petsUncheckedUpdateWithoutDefault_forInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  owner_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  species?: Prisma.StringFieldUpdateOperationsInput | string
+  breed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birth_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutPetsNestedInput
+  medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutPetsNestedInput
+  vaccinations?: Prisma.vaccinationsUncheckedUpdateManyWithoutPetsNestedInput
 }
 
 export type petsCreateWithoutVaccinationsInput = {
@@ -848,10 +1007,12 @@ export type petsCreateWithoutVaccinationsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutPetsInput
   profiles: Prisma.profilesCreateNestedOneWithoutPetsInput
+  default_for?: Prisma.profilesCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsUncheckedCreateWithoutVaccinationsInput = {
@@ -865,9 +1026,11 @@ export type petsUncheckedCreateWithoutVaccinationsInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutPetsInput
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutPetsInput
+  default_for?: Prisma.profilesUncheckedCreateNestedManyWithoutDefault_petInput
 }
 
 export type petsCreateOrConnectWithoutVaccinationsInput = {
@@ -896,10 +1059,12 @@ export type petsUpdateWithoutVaccinationsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUpdateManyWithoutPetsNestedInput
   profiles?: Prisma.profilesUpdateOneRequiredWithoutPetsNestedInput
+  default_for?: Prisma.profilesUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateWithoutVaccinationsInput = {
@@ -913,9 +1078,11 @@ export type petsUncheckedUpdateWithoutVaccinationsInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUncheckedUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsCreateManyProfilesInput = {
@@ -928,6 +1095,7 @@ export type petsCreateManyProfilesInput = {
   weight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: string | null
   avatar_url?: string | null
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
 }
 
@@ -941,10 +1109,12 @@ export type petsUpdateWithoutProfilesInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUpdateManyWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateWithoutProfilesInput = {
@@ -957,10 +1127,12 @@ export type petsUncheckedUpdateWithoutProfilesInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutPetsNestedInput
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutPetsNestedInput
   vaccinations?: Prisma.vaccinationsUncheckedUpdateManyWithoutPetsNestedInput
+  default_for?: Prisma.profilesUncheckedUpdateManyWithoutDefault_petNestedInput
 }
 
 export type petsUncheckedUpdateManyWithoutProfilesInput = {
@@ -973,6 +1145,7 @@ export type petsUncheckedUpdateManyWithoutProfilesInput = {
   weight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   chip_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -985,12 +1158,14 @@ export type PetsCountOutputType = {
   appointments: number
   medical_records: number
   vaccinations: number
+  default_for: number
 }
 
 export type PetsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | PetsCountOutputTypeCountAppointmentsArgs
   medical_records?: boolean | PetsCountOutputTypeCountMedical_recordsArgs
   vaccinations?: boolean | PetsCountOutputTypeCountVaccinationsArgs
+  default_for?: boolean | PetsCountOutputTypeCountDefault_forArgs
 }
 
 /**
@@ -1024,6 +1199,13 @@ export type PetsCountOutputTypeCountVaccinationsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.vaccinationsWhereInput
 }
 
+/**
+ * PetsCountOutputType without action
+ */
+export type PetsCountOutputTypeCountDefault_forArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.profilesWhereInput
+}
+
 
 export type petsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1036,11 +1218,13 @@ export type petsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   weight?: boolean
   chip_number?: boolean
   avatar_url?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   appointments?: boolean | Prisma.pets$appointmentsArgs<ExtArgs>
   medical_records?: boolean | Prisma.pets$medical_recordsArgs<ExtArgs>
   profiles?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   vaccinations?: boolean | Prisma.pets$vaccinationsArgs<ExtArgs>
+  default_for?: boolean | Prisma.pets$default_forArgs<ExtArgs>
   _count?: boolean | Prisma.PetsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pets"]>
 
@@ -1055,6 +1239,7 @@ export type petsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   weight?: boolean
   chip_number?: boolean
   avatar_url?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   profiles?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pets"]>
@@ -1070,6 +1255,7 @@ export type petsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   weight?: boolean
   chip_number?: boolean
   avatar_url?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   profiles?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pets"]>
@@ -1085,15 +1271,17 @@ export type petsSelectScalar = {
   weight?: boolean
   chip_number?: boolean
   avatar_url?: boolean
+  deleted_at?: boolean
   created_at?: boolean
 }
 
-export type petsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "name" | "species" | "breed" | "gender" | "birth_date" | "weight" | "chip_number" | "avatar_url" | "created_at", ExtArgs["result"]["pets"]>
+export type petsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "name" | "species" | "breed" | "gender" | "birth_date" | "weight" | "chip_number" | "avatar_url" | "deleted_at" | "created_at", ExtArgs["result"]["pets"]>
 export type petsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.pets$appointmentsArgs<ExtArgs>
   medical_records?: boolean | Prisma.pets$medical_recordsArgs<ExtArgs>
   profiles?: boolean | Prisma.profilesDefaultArgs<ExtArgs>
   vaccinations?: boolean | Prisma.pets$vaccinationsArgs<ExtArgs>
+  default_for?: boolean | Prisma.pets$default_forArgs<ExtArgs>
   _count?: boolean | Prisma.PetsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type petsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1110,6 +1298,7 @@ export type $petsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     medical_records: Prisma.$medical_recordsPayload<ExtArgs>[]
     profiles: Prisma.$profilesPayload<ExtArgs>
     vaccinations: Prisma.$vaccinationsPayload<ExtArgs>[]
+    default_for: Prisma.$profilesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1122,6 +1311,7 @@ export type $petsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     weight: runtime.Decimal | null
     chip_number: string | null
     avatar_url: string | null
+    deleted_at: Date | null
     created_at: Date | null
   }, ExtArgs["result"]["pets"]>
   composites: {}
@@ -1521,6 +1711,7 @@ export interface Prisma__petsClient<T, Null = never, ExtArgs extends runtime.Typ
   medical_records<T extends Prisma.pets$medical_recordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.pets$medical_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$medical_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   profiles<T extends Prisma.profilesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profilesDefaultArgs<ExtArgs>>): Prisma.Prisma__profilesClient<runtime.Types.Result.GetResult<Prisma.$profilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   vaccinations<T extends Prisma.pets$vaccinationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.pets$vaccinationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$vaccinationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  default_for<T extends Prisma.pets$default_forArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.pets$default_forArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$profilesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1560,6 +1751,7 @@ export interface petsFieldRefs {
   readonly weight: Prisma.FieldRef<"pets", 'Decimal'>
   readonly chip_number: Prisma.FieldRef<"pets", 'String'>
   readonly avatar_url: Prisma.FieldRef<"pets", 'String'>
+  readonly deleted_at: Prisma.FieldRef<"pets", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"pets", 'DateTime'>
 }
     
@@ -2026,6 +2218,30 @@ export type pets$vaccinationsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.VaccinationsScalarFieldEnum | Prisma.VaccinationsScalarFieldEnum[]
+}
+
+/**
+ * pets.default_for
+ */
+export type pets$default_forArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the profiles
+   */
+  select?: Prisma.profilesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the profiles
+   */
+  omit?: Prisma.profilesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.profilesInclude<ExtArgs> | null
+  where?: Prisma.profilesWhereInput
+  orderBy?: Prisma.profilesOrderByWithRelationInput | Prisma.profilesOrderByWithRelationInput[]
+  cursor?: Prisma.profilesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProfilesScalarFieldEnum | Prisma.ProfilesScalarFieldEnum[]
 }
 
 /**

@@ -29,6 +29,7 @@ export type ProfilesMinAggregateOutputType = {
   full_name: string | null
   email: string | null
   avatar_url: string | null
+  default_pet_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -38,6 +39,7 @@ export type ProfilesMaxAggregateOutputType = {
   full_name: string | null
   email: string | null
   avatar_url: string | null
+  default_pet_id: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -47,6 +49,7 @@ export type ProfilesCountAggregateOutputType = {
   full_name: number
   email: number
   avatar_url: number
+  default_pet_id: number
   created_at: number
   updated_at: number
   _all: number
@@ -58,6 +61,7 @@ export type ProfilesMinAggregateInputType = {
   full_name?: true
   email?: true
   avatar_url?: true
+  default_pet_id?: true
   created_at?: true
   updated_at?: true
 }
@@ -67,6 +71,7 @@ export type ProfilesMaxAggregateInputType = {
   full_name?: true
   email?: true
   avatar_url?: true
+  default_pet_id?: true
   created_at?: true
   updated_at?: true
 }
@@ -76,6 +81,7 @@ export type ProfilesCountAggregateInputType = {
   full_name?: true
   email?: true
   avatar_url?: true
+  default_pet_id?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -158,6 +164,7 @@ export type ProfilesGroupByOutputType = {
   full_name: string | null
   email: string | null
   avatar_url: string | null
+  default_pet_id: string | null
   created_at: Date | null
   updated_at: Date | null
   _count: ProfilesCountAggregateOutputType | null
@@ -188,11 +195,12 @@ export type profilesWhereInput = {
   full_name?: Prisma.StringNullableFilter<"profiles"> | string | null
   email?: Prisma.StringNullableFilter<"profiles"> | string | null
   avatar_url?: Prisma.StringNullableFilter<"profiles"> | string | null
+  default_pet_id?: Prisma.UuidNullableFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   appointments?: Prisma.AppointmentsListRelationFilter
   pets?: Prisma.PetsListRelationFilter
-  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  default_pet?: Prisma.XOR<Prisma.PetsNullableScalarRelationFilter, Prisma.petsWhereInput> | null
 }
 
 export type profilesOrderByWithRelationInput = {
@@ -200,11 +208,12 @@ export type profilesOrderByWithRelationInput = {
   full_name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_pet_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   appointments?: Prisma.appointmentsOrderByRelationAggregateInput
   pets?: Prisma.petsOrderByRelationAggregateInput
-  users?: Prisma.usersOrderByWithRelationInput
+  default_pet?: Prisma.petsOrderByWithRelationInput
 }
 
 export type profilesWhereUniqueInput = Prisma.AtLeast<{
@@ -215,11 +224,12 @@ export type profilesWhereUniqueInput = Prisma.AtLeast<{
   full_name?: Prisma.StringNullableFilter<"profiles"> | string | null
   email?: Prisma.StringNullableFilter<"profiles"> | string | null
   avatar_url?: Prisma.StringNullableFilter<"profiles"> | string | null
+  default_pet_id?: Prisma.UuidNullableFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   appointments?: Prisma.AppointmentsListRelationFilter
   pets?: Prisma.PetsListRelationFilter
-  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  default_pet?: Prisma.XOR<Prisma.PetsNullableScalarRelationFilter, Prisma.petsWhereInput> | null
 }, "id">
 
 export type profilesOrderByWithAggregationInput = {
@@ -227,6 +237,7 @@ export type profilesOrderByWithAggregationInput = {
   full_name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_pet_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.profilesCountOrderByAggregateInput
@@ -242,11 +253,13 @@ export type profilesScalarWhereWithAggregatesInput = {
   full_name?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
   avatar_url?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
+  default_pet_id?: Prisma.UuidNullableWithAggregatesFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"profiles"> | Date | string | null
 }
 
 export type profilesCreateInput = {
+  id: string
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
@@ -254,7 +267,7 @@ export type profilesCreateInput = {
   updated_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutProfilesInput
   pets?: Prisma.petsCreateNestedManyWithoutProfilesInput
-  users: Prisma.usersCreateNestedOneWithoutProfilesInput
+  default_pet?: Prisma.petsCreateNestedOneWithoutDefault_forInput
 }
 
 export type profilesUncheckedCreateInput = {
@@ -262,6 +275,7 @@ export type profilesUncheckedCreateInput = {
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
+  default_pet_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutProfilesInput
@@ -269,6 +283,7 @@ export type profilesUncheckedCreateInput = {
 }
 
 export type profilesUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -276,7 +291,7 @@ export type profilesUpdateInput = {
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutProfilesNestedInput
   pets?: Prisma.petsUpdateManyWithoutProfilesNestedInput
-  users?: Prisma.usersUpdateOneRequiredWithoutProfilesNestedInput
+  default_pet?: Prisma.petsUpdateOneWithoutDefault_forNestedInput
 }
 
 export type profilesUncheckedUpdateInput = {
@@ -284,6 +299,7 @@ export type profilesUncheckedUpdateInput = {
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_pet_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutProfilesNestedInput
@@ -295,11 +311,13 @@ export type profilesCreateManyInput = {
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
+  default_pet_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
 
 export type profilesUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -312,13 +330,9 @@ export type profilesUncheckedUpdateManyInput = {
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_pet_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type ProfilesNullableScalarRelationFilter = {
-  is?: Prisma.profilesWhereInput | null
-  isNot?: Prisma.profilesWhereInput | null
 }
 
 export type ProfilesScalarRelationFilter = {
@@ -326,11 +340,22 @@ export type ProfilesScalarRelationFilter = {
   isNot?: Prisma.profilesWhereInput
 }
 
+export type ProfilesListRelationFilter = {
+  every?: Prisma.profilesWhereInput
+  some?: Prisma.profilesWhereInput
+  none?: Prisma.profilesWhereInput
+}
+
+export type profilesOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type profilesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  default_pet_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -340,6 +365,7 @@ export type profilesMaxOrderByAggregateInput = {
   full_name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  default_pet_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -349,40 +375,9 @@ export type profilesMinOrderByAggregateInput = {
   full_name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
+  default_pet_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-}
-
-export type profilesCreateNestedOneWithoutUsersInput = {
-  create?: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutUsersInput
-  connect?: Prisma.profilesWhereUniqueInput
-}
-
-export type profilesUncheckedCreateNestedOneWithoutUsersInput = {
-  create?: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutUsersInput
-  connect?: Prisma.profilesWhereUniqueInput
-}
-
-export type profilesUpdateOneWithoutUsersNestedInput = {
-  create?: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutUsersInput
-  upsert?: Prisma.profilesUpsertWithoutUsersInput
-  disconnect?: Prisma.profilesWhereInput | boolean
-  delete?: Prisma.profilesWhereInput | boolean
-  connect?: Prisma.profilesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutUsersInput, Prisma.profilesUpdateWithoutUsersInput>, Prisma.profilesUncheckedUpdateWithoutUsersInput>
-}
-
-export type profilesUncheckedUpdateOneWithoutUsersNestedInput = {
-  create?: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutUsersInput
-  upsert?: Prisma.profilesUpsertWithoutUsersInput
-  disconnect?: Prisma.profilesWhereInput | boolean
-  delete?: Prisma.profilesWhereInput | boolean
-  connect?: Prisma.profilesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutUsersInput, Prisma.profilesUpdateWithoutUsersInput>, Prisma.profilesUncheckedUpdateWithoutUsersInput>
 }
 
 export type profilesCreateNestedOneWithoutAppointmentsInput = {
@@ -405,6 +400,20 @@ export type profilesCreateNestedOneWithoutPetsInput = {
   connect?: Prisma.profilesWhereUniqueInput
 }
 
+export type profilesCreateNestedManyWithoutDefault_petInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput> | Prisma.profilesCreateWithoutDefault_petInput[] | Prisma.profilesUncheckedCreateWithoutDefault_petInput[]
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutDefault_petInput | Prisma.profilesCreateOrConnectWithoutDefault_petInput[]
+  createMany?: Prisma.profilesCreateManyDefault_petInputEnvelope
+  connect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+}
+
+export type profilesUncheckedCreateNestedManyWithoutDefault_petInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput> | Prisma.profilesCreateWithoutDefault_petInput[] | Prisma.profilesUncheckedCreateWithoutDefault_petInput[]
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutDefault_petInput | Prisma.profilesCreateOrConnectWithoutDefault_petInput[]
+  createMany?: Prisma.profilesCreateManyDefault_petInputEnvelope
+  connect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+}
+
 export type profilesUpdateOneRequiredWithoutPetsNestedInput = {
   create?: Prisma.XOR<Prisma.profilesCreateWithoutPetsInput, Prisma.profilesUncheckedCreateWithoutPetsInput>
   connectOrCreate?: Prisma.profilesCreateOrConnectWithoutPetsInput
@@ -413,70 +422,43 @@ export type profilesUpdateOneRequiredWithoutPetsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutPetsInput, Prisma.profilesUpdateWithoutPetsInput>, Prisma.profilesUncheckedUpdateWithoutPetsInput>
 }
 
-export type profilesCreateWithoutUsersInput = {
-  full_name?: string | null
-  email?: string | null
-  avatar_url?: string | null
-  created_at?: Date | string | null
-  updated_at?: Date | string | null
-  appointments?: Prisma.appointmentsCreateNestedManyWithoutProfilesInput
-  pets?: Prisma.petsCreateNestedManyWithoutProfilesInput
+export type profilesUpdateManyWithoutDefault_petNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput> | Prisma.profilesCreateWithoutDefault_petInput[] | Prisma.profilesUncheckedCreateWithoutDefault_petInput[]
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutDefault_petInput | Prisma.profilesCreateOrConnectWithoutDefault_petInput[]
+  upsert?: Prisma.profilesUpsertWithWhereUniqueWithoutDefault_petInput | Prisma.profilesUpsertWithWhereUniqueWithoutDefault_petInput[]
+  createMany?: Prisma.profilesCreateManyDefault_petInputEnvelope
+  set?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  disconnect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  delete?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  connect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  update?: Prisma.profilesUpdateWithWhereUniqueWithoutDefault_petInput | Prisma.profilesUpdateWithWhereUniqueWithoutDefault_petInput[]
+  updateMany?: Prisma.profilesUpdateManyWithWhereWithoutDefault_petInput | Prisma.profilesUpdateManyWithWhereWithoutDefault_petInput[]
+  deleteMany?: Prisma.profilesScalarWhereInput | Prisma.profilesScalarWhereInput[]
 }
 
-export type profilesUncheckedCreateWithoutUsersInput = {
-  full_name?: string | null
-  email?: string | null
-  avatar_url?: string | null
-  created_at?: Date | string | null
-  updated_at?: Date | string | null
-  appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutProfilesInput
-  pets?: Prisma.petsUncheckedCreateNestedManyWithoutProfilesInput
-}
-
-export type profilesCreateOrConnectWithoutUsersInput = {
-  where: Prisma.profilesWhereUniqueInput
-  create: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-}
-
-export type profilesUpsertWithoutUsersInput = {
-  update: Prisma.XOR<Prisma.profilesUpdateWithoutUsersInput, Prisma.profilesUncheckedUpdateWithoutUsersInput>
-  create: Prisma.XOR<Prisma.profilesCreateWithoutUsersInput, Prisma.profilesUncheckedCreateWithoutUsersInput>
-  where?: Prisma.profilesWhereInput
-}
-
-export type profilesUpdateToOneWithWhereWithoutUsersInput = {
-  where?: Prisma.profilesWhereInput
-  data: Prisma.XOR<Prisma.profilesUpdateWithoutUsersInput, Prisma.profilesUncheckedUpdateWithoutUsersInput>
-}
-
-export type profilesUpdateWithoutUsersInput = {
-  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  appointments?: Prisma.appointmentsUpdateManyWithoutProfilesNestedInput
-  pets?: Prisma.petsUpdateManyWithoutProfilesNestedInput
-}
-
-export type profilesUncheckedUpdateWithoutUsersInput = {
-  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutProfilesNestedInput
-  pets?: Prisma.petsUncheckedUpdateManyWithoutProfilesNestedInput
+export type profilesUncheckedUpdateManyWithoutDefault_petNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput> | Prisma.profilesCreateWithoutDefault_petInput[] | Prisma.profilesUncheckedCreateWithoutDefault_petInput[]
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutDefault_petInput | Prisma.profilesCreateOrConnectWithoutDefault_petInput[]
+  upsert?: Prisma.profilesUpsertWithWhereUniqueWithoutDefault_petInput | Prisma.profilesUpsertWithWhereUniqueWithoutDefault_petInput[]
+  createMany?: Prisma.profilesCreateManyDefault_petInputEnvelope
+  set?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  disconnect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  delete?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  connect?: Prisma.profilesWhereUniqueInput | Prisma.profilesWhereUniqueInput[]
+  update?: Prisma.profilesUpdateWithWhereUniqueWithoutDefault_petInput | Prisma.profilesUpdateWithWhereUniqueWithoutDefault_petInput[]
+  updateMany?: Prisma.profilesUpdateManyWithWhereWithoutDefault_petInput | Prisma.profilesUpdateManyWithWhereWithoutDefault_petInput[]
+  deleteMany?: Prisma.profilesScalarWhereInput | Prisma.profilesScalarWhereInput[]
 }
 
 export type profilesCreateWithoutAppointmentsInput = {
+  id: string
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   pets?: Prisma.petsCreateNestedManyWithoutProfilesInput
-  users: Prisma.usersCreateNestedOneWithoutProfilesInput
+  default_pet?: Prisma.petsCreateNestedOneWithoutDefault_forInput
 }
 
 export type profilesUncheckedCreateWithoutAppointmentsInput = {
@@ -484,6 +466,7 @@ export type profilesUncheckedCreateWithoutAppointmentsInput = {
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
+  default_pet_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   pets?: Prisma.petsUncheckedCreateNestedManyWithoutProfilesInput
@@ -506,13 +489,14 @@ export type profilesUpdateToOneWithWhereWithoutAppointmentsInput = {
 }
 
 export type profilesUpdateWithoutAppointmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pets?: Prisma.petsUpdateManyWithoutProfilesNestedInput
-  users?: Prisma.usersUpdateOneRequiredWithoutProfilesNestedInput
+  default_pet?: Prisma.petsUpdateOneWithoutDefault_forNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutAppointmentsInput = {
@@ -520,19 +504,21 @@ export type profilesUncheckedUpdateWithoutAppointmentsInput = {
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_pet_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pets?: Prisma.petsUncheckedUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesCreateWithoutPetsInput = {
+  id: string
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   appointments?: Prisma.appointmentsCreateNestedManyWithoutProfilesInput
-  users: Prisma.usersCreateNestedOneWithoutProfilesInput
+  default_pet?: Prisma.petsCreateNestedOneWithoutDefault_forInput
 }
 
 export type profilesUncheckedCreateWithoutPetsInput = {
@@ -540,6 +526,7 @@ export type profilesUncheckedCreateWithoutPetsInput = {
   full_name?: string | null
   email?: string | null
   avatar_url?: string | null
+  default_pet_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutProfilesInput
@@ -548,6 +535,38 @@ export type profilesUncheckedCreateWithoutPetsInput = {
 export type profilesCreateOrConnectWithoutPetsInput = {
   where: Prisma.profilesWhereUniqueInput
   create: Prisma.XOR<Prisma.profilesCreateWithoutPetsInput, Prisma.profilesUncheckedCreateWithoutPetsInput>
+}
+
+export type profilesCreateWithoutDefault_petInput = {
+  id: string
+  full_name?: string | null
+  email?: string | null
+  avatar_url?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  appointments?: Prisma.appointmentsCreateNestedManyWithoutProfilesInput
+  pets?: Prisma.petsCreateNestedManyWithoutProfilesInput
+}
+
+export type profilesUncheckedCreateWithoutDefault_petInput = {
+  id: string
+  full_name?: string | null
+  email?: string | null
+  avatar_url?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutProfilesInput
+  pets?: Prisma.petsUncheckedCreateNestedManyWithoutProfilesInput
+}
+
+export type profilesCreateOrConnectWithoutDefault_petInput = {
+  where: Prisma.profilesWhereUniqueInput
+  create: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput>
+}
+
+export type profilesCreateManyDefault_petInputEnvelope = {
+  data: Prisma.profilesCreateManyDefault_petInput | Prisma.profilesCreateManyDefault_petInput[]
+  skipDuplicates?: boolean
 }
 
 export type profilesUpsertWithoutPetsInput = {
@@ -562,13 +581,14 @@ export type profilesUpdateToOneWithWhereWithoutPetsInput = {
 }
 
 export type profilesUpdateWithoutPetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUpdateManyWithoutProfilesNestedInput
-  users?: Prisma.usersUpdateOneRequiredWithoutProfilesNestedInput
+  default_pet?: Prisma.petsUpdateOneWithoutDefault_forNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutPetsInput = {
@@ -576,9 +596,79 @@ export type profilesUncheckedUpdateWithoutPetsInput = {
   full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_pet_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutProfilesNestedInput
+}
+
+export type profilesUpsertWithWhereUniqueWithoutDefault_petInput = {
+  where: Prisma.profilesWhereUniqueInput
+  update: Prisma.XOR<Prisma.profilesUpdateWithoutDefault_petInput, Prisma.profilesUncheckedUpdateWithoutDefault_petInput>
+  create: Prisma.XOR<Prisma.profilesCreateWithoutDefault_petInput, Prisma.profilesUncheckedCreateWithoutDefault_petInput>
+}
+
+export type profilesUpdateWithWhereUniqueWithoutDefault_petInput = {
+  where: Prisma.profilesWhereUniqueInput
+  data: Prisma.XOR<Prisma.profilesUpdateWithoutDefault_petInput, Prisma.profilesUncheckedUpdateWithoutDefault_petInput>
+}
+
+export type profilesUpdateManyWithWhereWithoutDefault_petInput = {
+  where: Prisma.profilesScalarWhereInput
+  data: Prisma.XOR<Prisma.profilesUpdateManyMutationInput, Prisma.profilesUncheckedUpdateManyWithoutDefault_petInput>
+}
+
+export type profilesScalarWhereInput = {
+  AND?: Prisma.profilesScalarWhereInput | Prisma.profilesScalarWhereInput[]
+  OR?: Prisma.profilesScalarWhereInput[]
+  NOT?: Prisma.profilesScalarWhereInput | Prisma.profilesScalarWhereInput[]
+  id?: Prisma.UuidFilter<"profiles"> | string
+  full_name?: Prisma.StringNullableFilter<"profiles"> | string | null
+  email?: Prisma.StringNullableFilter<"profiles"> | string | null
+  avatar_url?: Prisma.StringNullableFilter<"profiles"> | string | null
+  default_pet_id?: Prisma.UuidNullableFilter<"profiles"> | string | null
+  created_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
+  updated_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
+}
+
+export type profilesCreateManyDefault_petInput = {
+  id: string
+  full_name?: string | null
+  email?: string | null
+  avatar_url?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+}
+
+export type profilesUpdateWithoutDefault_petInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointments?: Prisma.appointmentsUpdateManyWithoutProfilesNestedInput
+  pets?: Prisma.petsUpdateManyWithoutProfilesNestedInput
+}
+
+export type profilesUncheckedUpdateWithoutDefault_petInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutProfilesNestedInput
+  pets?: Prisma.petsUncheckedUpdateManyWithoutProfilesNestedInput
+}
+
+export type profilesUncheckedUpdateManyWithoutDefault_petInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -626,11 +716,12 @@ export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   full_name?: boolean
   email?: boolean
   avatar_url?: boolean
+  default_pet_id?: boolean
   created_at?: boolean
   updated_at?: boolean
   appointments?: boolean | Prisma.profiles$appointmentsArgs<ExtArgs>
   pets?: boolean | Prisma.profiles$petsArgs<ExtArgs>
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
@@ -639,9 +730,10 @@ export type profilesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   full_name?: boolean
   email?: boolean
   avatar_url?: boolean
+  default_pet_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -649,9 +741,10 @@ export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   full_name?: boolean
   email?: boolean
   avatar_url?: boolean
+  default_pet_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectScalar = {
@@ -659,22 +752,23 @@ export type profilesSelectScalar = {
   full_name?: boolean
   email?: boolean
   avatar_url?: boolean
+  default_pet_id?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "email" | "avatar_url" | "created_at" | "updated_at", ExtArgs["result"]["profiles"]>
+export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "email" | "avatar_url" | "default_pet_id" | "created_at" | "updated_at", ExtArgs["result"]["profiles"]>
 export type profilesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.profiles$appointmentsArgs<ExtArgs>
   pets?: boolean | Prisma.profiles$petsArgs<ExtArgs>
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type profilesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
 }
 export type profilesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  default_pet?: boolean | Prisma.profiles$default_petArgs<ExtArgs>
 }
 
 export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -682,13 +776,14 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     appointments: Prisma.$appointmentsPayload<ExtArgs>[]
     pets: Prisma.$petsPayload<ExtArgs>[]
-    users: Prisma.$usersPayload<ExtArgs>
+    default_pet: Prisma.$petsPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     full_name: string | null
     email: string | null
     avatar_url: string | null
+    default_pet_id: string | null
     created_at: Date | null
     updated_at: Date | null
   }, ExtArgs["result"]["profiles"]>
@@ -1087,7 +1182,7 @@ export interface Prisma__profilesClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   appointments<T extends Prisma.profiles$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$appointmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pets<T extends Prisma.profiles$petsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$petsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$petsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  default_pet<T extends Prisma.profiles$default_petArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$default_petArgs<ExtArgs>>): Prisma.Prisma__petsClient<runtime.Types.Result.GetResult<Prisma.$petsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1121,6 +1216,7 @@ export interface profilesFieldRefs {
   readonly full_name: Prisma.FieldRef<"profiles", 'String'>
   readonly email: Prisma.FieldRef<"profiles", 'String'>
   readonly avatar_url: Prisma.FieldRef<"profiles", 'String'>
+  readonly default_pet_id: Prisma.FieldRef<"profiles", 'String'>
   readonly created_at: Prisma.FieldRef<"profiles", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"profiles", 'DateTime'>
 }
@@ -1564,6 +1660,25 @@ export type profiles$petsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PetsScalarFieldEnum | Prisma.PetsScalarFieldEnum[]
+}
+
+/**
+ * profiles.default_pet
+ */
+export type profiles$default_petArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the pets
+   */
+  select?: Prisma.petsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the pets
+   */
+  omit?: Prisma.petsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.petsInclude<ExtArgs> | null
+  where?: Prisma.petsWhereInput
 }
 
 /**

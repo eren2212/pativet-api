@@ -1,6 +1,8 @@
-import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service.js';
 import { CreatePetDto } from './dto/create-pet.dto.js';
+import { PetDetailResponseDto } from './dto/pet-detail-response.dto.js';
+import { UpdatePetDto } from './dto/pet-update.dto.js';
 
 @Injectable()
 export class PetsService {
@@ -10,36 +12,50 @@ export class PetsService {
 
     constructor(private prisma: PrismaService) { }
 
-    async create(createPetDto: CreatePetDto, userId: string) {
-        try {
-            // İşlem başlangıcını logluyoruz (Info seviyesi)
-            this.logger.log(`Kullanıcı (${userId}) için yeni evcil hayvan oluşturuluyor: ${createPetDto.name}`);
+    // Evcil hayvan oluşturmak için kullanılır
+    async create(userId: string, createPetDto: CreatePetDto): Promise<PetDetailResponseDto> {
 
-            const pet = await this.prisma.pets.create({
+        // 1. YENİ PETİ OLUŞTUR
+        // DTO'dan gelen verilerle peti veritabanına yazıyoruz
+        const newPet = await this.prisma.pets.create({
+            data: {
+                ...createPetDto,
+                owner_id: userId,
+            },
+        });
+
+        // 2. KULLANICININ PROFİLİNİ KONTROL ET
+        // Sadece default_pet_id alanını çekmek performansı artırır (Tüm profili çekmeye gerek yok)
+        const userProfile = await this.prisma.profiles.findUnique({
+            where: {
+                id: userId
+            },
+            select: {
+                default_pet_id: true
+            },
+        });
+
+        // 3. İLK PET MANTĞI (OTOMATİK ATAMA)
+        // Eğer kullanıcının şu an varsayılan bir peti yoksa, bu yeni peti varsayılan yap!
+        if (!userProfile?.default_pet_id) {
+            await this.prisma.profiles.update({
+                where: {
+                    id: userId
+                },
                 data: {
-                    ...createPetDto,
-                    owner_id: userId,
+                    default_pet_id: newPet.id
                 },
             });
-
-            // İşlem başarısını logluyoruz
-            this.logger.log(`Evcil hayvan başarıyla oluşturuldu. PetID: ${pet.id}`);
-            return pet;
-
-        } catch (error) {
-            // 2. Hata anında KIRMIZI alarm! (Error seviyesi)
-            // error.stack sayesinde hatanın hangi satırda olduğunu görebileceksin.
-            this.logger.error(
-                `Evcil hayvan oluşturulurken hata oluştu! UserID: ${userId}`,
-                error instanceof Error ? error.stack : error,
-            );
-
-            // 3. Kullanıcıya temiz bir hata mesajı dönüyoruz.
-            // Veritabanı hatasını (SQL hatasını) gizliyoruz.
-            throw new InternalServerErrorException('Evcil hayvan oluşturulamadı, lütfen bilgileri kontrol edip tekrar deneyin.');
         }
+
+        // 4. TERTEMİZ DTO İLE YANIT DÖN
+        return new PetDetailResponseDto({
+            ...newPet,
+            weight: newPet.weight ? newPet.weight.toNumber() : undefined,
+        });
     }
 
+    // Kullanıcının tüm evcil hayvanlarını listelemek için kullanılır
     async findAllMyPets(userId: string) {
         try {
             this.logger.log(`Kullanıcı (${userId}) tüm evcil hayvanlarını listeliyor...`);
@@ -47,6 +63,13 @@ export class PetsService {
             const pets = await this.prisma.pets.findMany({
                 where: {
                     owner_id: userId,
+                    deleted_at: null,
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    breed: true,
+                    avatar_url: true,
                 },
                 orderBy: {
                     created_at: 'desc', // En son ekleneni en üstte getirir, şık durur
@@ -64,4 +87,133 @@ export class PetsService {
             throw new InternalServerErrorException('Hayvan listesi getirilemedi.');
         }
     }
+
+    // Kullanıcının bir evcil hayvanını detaylı bir şekilde görüntülemek için kullanılır
+    async findOne(id: string, userId: string): Promise<PetDetailResponseDto> {
+
+        const pet = await this.prisma.pets.findFirst({
+            where: {
+                id,
+                owner_id: userId,
+                deleted_at: null,
+            },
+        });
+
+        if (!pet) {
+            throw new NotFoundException('Hayvan bulunamadı.');
+        }
+
+        return new PetDetailResponseDto(
+            {
+                ...pet,
+                weight: pet.weight ? pet.weight.toNumber() : undefined,
+            }
+        );
+    }
+
+    // Kullanıcının bir evcil hayvanını güncellemek için kullanılır
+    async update(petId: string, userId: string, updatePetDto: UpdatePetDto): Promise<PetDetailResponseDto> {
+
+        // 1. GÜVENLİK KONTROLÜ: Bu pet gerçekten var mı ve bu kullanıcıya mı ait?
+        const existingPet = await this.prisma.pets.findFirst({
+            where: {
+                id: petId,
+                owner_id: userId,
+            },
+        });
+
+        if (!existingPet) {
+            // Eğer pet yoksa veya başkasınınsa, hacker'a veya kullanıcıya bilgi vermemek için
+            // genel bir "Bulunamadı" hatası dönmek en güvenli yoldur.
+            throw new NotFoundException('Güncellenecek pet bulunamadı veya bu işlem için yetkiniz yok.');
+        }
+
+        // 2. GÜNCELLEME İŞLEMİ
+        // Prisma, updatePetDto içindeki undefined (gönderilmeyen) alanları yoksayar,
+        // sadece kullanıcının gönderdiği (dolu olan) alanları günceller.
+        const updatedPet = await this.prisma.pets.update({
+            where: {
+                id: petId, // Güvenlik kontrolünü geçtiğimiz için artık gönül rahatlığıyla id verebiliriz
+            },
+            data: {
+                ...updatePetDto,
+            },
+        });
+
+        // 3. TUTARLI YANIT (RESPONSE)
+        // Güncel veriyi, az önce yazdığımız Response DTO'muzdan geçirerek tertemiz bir şekilde dönüyoruz.
+        // Yine Decimal(weight) hatası almamak için toNumber() dönüşümünü yapıyoruz.
+        return new PetDetailResponseDto({
+            ...updatedPet,
+            weight: updatedPet.weight ? updatedPet.weight.toNumber() : undefined,
+        });
+    }
+
+    // Kullanıcının bir evcil hayvanını silmek için kullanılır
+    async remove(petId: string, userId: string): Promise<{ message: string; success: boolean }> {
+
+        // 1. GÜVENLİK KONTROLÜ
+        const existingPet = await this.prisma.pets.findFirst({
+            where: {
+                id: petId,
+                owner_id: userId,
+                deleted_at: null, // ÖNEMLİ: Zaten silinmiş bir peti tekrar silmeye çalışmasını engelliyoruz
+            },
+        });
+
+        if (!existingPet) {
+            throw new NotFoundException('Silinecek evcil hayvan bulunamadı veya bu işlem için yetkiniz yok.');
+        }
+
+        // 2. SOFT DELETE (Gizleme İşlemi)
+        await this.prisma.pets.update({
+            where: {
+                id: petId,
+            },
+            data: {
+                deleted_at: new Date(), // O anın tarih ve saatini mühürlüyoruz
+            },
+        });
+
+        // 3. BAŞARILI YANIT
+        return {
+            success: true,
+            message: `${existingPet.name} isimli evcil hayvan sistemden başarıyla kaldırıldı.`
+        };
+    }
+
+    // Kullanıcının bir evcil hayvanını varsayılan hayvanı olarak ayarlamak için kullanılır
+    async setDefaultPet(petId: string, userId: string): Promise<{ success: boolean; message: string }> {
+
+        // 1. GÜVENLİK KONTROLÜ: Bu pet kullanıcının mı ve hala hayatta mı (silinmemiş mi)?
+        const pet = await this.prisma.pets.findFirst({
+            where: {
+                id: petId,
+                owner_id: userId,
+                deleted_at: null, // Silinmiş bir pet varsayılan olamaz!
+            },
+        });
+
+        if (!pet) {
+            throw new NotFoundException('Evcil hayvan bulunamadı veya bu işlem için yetkiniz yok.');
+        }
+
+        // 2. GÜNCELLEME İŞLEMİ: Kullanıcının profilindeki default_pet_id alanını güncelliyoruz
+        await this.prisma.profiles.update({
+            where: {
+                id: userId, // Profil ID'si zaten User ID ile aynı
+            },
+            data: {
+                default_pet_id: petId,
+            },
+        });
+
+        // 3. BAŞARILI YANIT
+        return {
+            success: true,
+            message: `${pet.name} artık varsayılan evcil hayvanınız olarak ayarlandı.`,
+        };
+    }
+
+
 }
