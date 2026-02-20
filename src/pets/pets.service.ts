@@ -3,14 +3,24 @@ import { PrismaService } from '../prisma.service.js';
 import { CreatePetDto } from './dto/create-pet.dto.js';
 import { PetDetailResponseDto } from './dto/pet-detail-response.dto.js';
 import { UpdatePetDto } from './dto/pet-update.dto.js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { v4 as uuidv4 } from 'uuid';
+import { extname } from 'path';
 
 @Injectable()
 export class PetsService {
     // 1. Logger'ı kendi sınıf ismiyle başlatıyoruz.
     // Loglarda [PetsService] diye görünecek, hatanın nerede olduğunu şak diye anlayacaksın.
     private readonly logger = new Logger(PetsService.name);
+    private supabase: SupabaseClient<any, 'public', any>;
 
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaService) {
+
+        this.supabase = createClient<any, 'public', any>(
+            process.env.SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        );
+    }
 
     // Evcil hayvan oluşturmak için kullanılır
     async create(userId: string, createPetDto: CreatePetDto): Promise<PetDetailResponseDto> {
@@ -60,27 +70,40 @@ export class PetsService {
         try {
             this.logger.log(`Kullanıcı (${userId}) tüm evcil hayvanlarını listeliyor...`);
 
-            const pets = await this.prisma.pets.findMany({
-                where: {
-                    owner_id: userId,
-                    deleted_at: null,
-                },
-                select: {
-                    id: true,
-                    name: true,
-                    breed: true,
-                    avatar_url: true,
-                },
-                orderBy: {
-                    created_at: 'desc', // En son ekleneni en üstte getirir, şık durur
-                },
-            });
+            // 1. Ortak WHERE koşulumuzu bir değişkene atıyoruz ki iki sorguda da aynı kodu yazmayalım
+            const whereCondition = {
+                owner_id: userId,
+                deleted_at: null,
+            };
 
-            if (!pets || pets.length === 0) {
+            // 2. Promise.all ile aynı anda hem petleri hem de toplam sayıyı (count) çekiyoruz
+            const [pets, totalCount] = await Promise.all([
+                this.prisma.pets.findMany({
+                    where: whereCondition,
+                    select: {
+                        id: true,
+                        name: true,
+                        breed: true,
+                        avatar_url: true,
+                    },
+                    orderBy: {
+                        created_at: 'desc', // En son ekleneni en üstte getirir, şık durur
+                    },
+                }),
+                this.prisma.pets.count({
+                    where: whereCondition,
+                })
+            ]);
+
+            if (totalCount === 0) {
                 this.logger.warn(`Kullanıcının (${userId}) hiç hayvanı yok.`);
             }
 
-            return pets;
+            // 3. Frontend tarafına veriyi ve sayıyı güzel bir obje (JSON) halinde dönüyoruz
+            return {
+                data: pets,
+                count: totalCount
+            };
 
         } catch (error) {
             this.logger.error(`Hayvanlar listelenirken hata: ${error instanceof Error ? error.message : 'Unknown error'}`, error instanceof Error ? error.stack : 'Unknown stack');
@@ -215,5 +238,73 @@ export class PetsService {
         };
     }
 
+    // Kullanıcının bir evcil hayvanının avatarını yüklemek için kullanılır
+    async uploadAvatar(
+        petId: string,
+        userId: string,
+        file: { originalname: string; buffer: Buffer; mimetype: string }
+    ) {
+        // 1. Peti bul (Eski avatar_url burada pet objesinin içinde elimizde olacak)
+        const pet = await this.prisma.pets.findFirst({
+            where: { id: petId, owner_id: userId, deleted_at: null },
+        });
+
+        if (!pet) {
+            throw new NotFoundException('Evcil hayvan bulunamadı veya bu işlem için yetkiniz yok.');
+        }
+
+        // 2. YENİ DOSYA ADINI OLUŞTUR
+        const fileExt = extname(file.originalname);
+        const uniqueFileName = `${petId}-${uuidv4()}${fileExt}`;
+
+        // 3. YENİ RESMİ YÜKLE
+        const { error: uploadError } = await this.supabase.storage
+            .from('pet-avatars')
+            .upload(uniqueFileName, file.buffer, {
+                contentType: file.mimetype,
+                upsert: true,
+            });
+
+        if (uploadError) {
+            console.error('Supabase Storage Yükleme Hatası:', uploadError);
+            throw new InternalServerErrorException('Fotoğraf yüklenirken bulut sunucusunda bir hata oluştu.');
+        }
+
+        // 4. ESKİ RESMİ SİLME İŞLEMİ (Bucket Patlamasını Önlüyor!)
+        // Sadece petin halihazırda bir fotoğrafı varsa ve bu bizim storage'dan geliyorsa sil
+        if (pet.avatar_url && pet.avatar_url.includes('pet-avatars')) {
+            // URL'den sadece dosya adını koparıp alıyoruz. 
+            // Örn: https://.../pet-avatars/d267-pamuk.jpg -> "d267-pamuk.jpg"
+            const urlParts = pet.avatar_url.split('/');
+            const oldFileName = urlParts[urlParts.length - 1];
+
+            // Dosyayı Supabase'den siliyoruz
+            const { error: removeError } = await this.supabase.storage
+                .from('pet-avatars')
+                .remove([oldFileName]);
+
+            if (removeError) {
+                // Silme başarısız olursa NestJS'i çökertmeyiz, adam yeni fotoğrafını yükledi sonuçta.
+                // Sadece terminale log basarız ki arka planda ne olduğunu bilelim.
+                console.warn(`[UYARI] Eski avatar silinemedi (Pet ID: ${petId}):`, removeError.message);
+            }
+        }
+
+        // 5. YENİ PUBLIC URL'İ AL VE DB'Yİ GÜNCELLE
+        const { data: { publicUrl } } = this.supabase.storage
+            .from('pet-avatars')
+            .getPublicUrl(uniqueFileName);
+
+        await this.prisma.pets.update({
+            where: { id: petId },
+            data: { avatar_url: publicUrl },
+        });
+
+        return {
+            success: true,
+            message: 'Fotoğraf başarıyla güncellendi.',
+            avatar_url: publicUrl
+        };
+    }
 
 }
