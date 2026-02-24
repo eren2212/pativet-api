@@ -30,12 +30,14 @@ export type ClinicsAvgAggregateOutputType = {
   rating: runtime.Decimal | null
   latitude: number | null
   longitude: number | null
+  appointment_duration: number | null
 }
 
 export type ClinicsSumAggregateOutputType = {
   rating: runtime.Decimal | null
   latitude: number | null
   longitude: number | null
+  appointment_duration: number | null
 }
 
 export type ClinicsMinAggregateOutputType = {
@@ -48,6 +50,7 @@ export type ClinicsMinAggregateOutputType = {
   latitude: number | null
   longitude: number | null
   created_at: Date | null
+  appointment_duration: number | null
 }
 
 export type ClinicsMaxAggregateOutputType = {
@@ -60,6 +63,7 @@ export type ClinicsMaxAggregateOutputType = {
   latitude: number | null
   longitude: number | null
   created_at: Date | null
+  appointment_duration: number | null
 }
 
 export type ClinicsCountAggregateOutputType = {
@@ -72,6 +76,7 @@ export type ClinicsCountAggregateOutputType = {
   latitude: number
   longitude: number
   created_at: number
+  appointment_duration: number
   _all: number
 }
 
@@ -80,12 +85,14 @@ export type ClinicsAvgAggregateInputType = {
   rating?: true
   latitude?: true
   longitude?: true
+  appointment_duration?: true
 }
 
 export type ClinicsSumAggregateInputType = {
   rating?: true
   latitude?: true
   longitude?: true
+  appointment_duration?: true
 }
 
 export type ClinicsMinAggregateInputType = {
@@ -98,6 +105,7 @@ export type ClinicsMinAggregateInputType = {
   latitude?: true
   longitude?: true
   created_at?: true
+  appointment_duration?: true
 }
 
 export type ClinicsMaxAggregateInputType = {
@@ -110,6 +118,7 @@ export type ClinicsMaxAggregateInputType = {
   latitude?: true
   longitude?: true
   created_at?: true
+  appointment_duration?: true
 }
 
 export type ClinicsCountAggregateInputType = {
@@ -122,6 +131,7 @@ export type ClinicsCountAggregateInputType = {
   latitude?: true
   longitude?: true
   created_at?: true
+  appointment_duration?: true
   _all?: true
 }
 
@@ -221,6 +231,7 @@ export type ClinicsGroupByOutputType = {
   latitude: number | null
   longitude: number | null
   created_at: Date | null
+  appointment_duration: number
   _count: ClinicsCountAggregateOutputType | null
   _avg: ClinicsAvgAggregateOutputType | null
   _sum: ClinicsSumAggregateOutputType | null
@@ -256,8 +267,10 @@ export type clinicsWhereInput = {
   latitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
   longitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
   created_at?: Prisma.DateTimeNullableFilter<"clinics"> | Date | string | null
+  appointment_duration?: Prisma.IntFilter<"clinics"> | number
   appointments?: Prisma.AppointmentsListRelationFilter
   medical_records?: Prisma.Medical_recordsListRelationFilter
+  clinic_working_hours?: Prisma.Clinic_working_hoursListRelationFilter
 }
 
 export type clinicsOrderByWithRelationInput = {
@@ -270,8 +283,10 @@ export type clinicsOrderByWithRelationInput = {
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
   appointments?: Prisma.appointmentsOrderByRelationAggregateInput
   medical_records?: Prisma.medical_recordsOrderByRelationAggregateInput
+  clinic_working_hours?: Prisma.clinic_working_hoursOrderByRelationAggregateInput
 }
 
 export type clinicsWhereUniqueInput = Prisma.AtLeast<{
@@ -287,8 +302,10 @@ export type clinicsWhereUniqueInput = Prisma.AtLeast<{
   latitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
   longitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
   created_at?: Prisma.DateTimeNullableFilter<"clinics"> | Date | string | null
+  appointment_duration?: Prisma.IntFilter<"clinics"> | number
   appointments?: Prisma.AppointmentsListRelationFilter
   medical_records?: Prisma.Medical_recordsListRelationFilter
+  clinic_working_hours?: Prisma.Clinic_working_hoursListRelationFilter
 }, "id">
 
 export type clinicsOrderByWithAggregationInput = {
@@ -301,6 +318,7 @@ export type clinicsOrderByWithAggregationInput = {
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
   _count?: Prisma.clinicsCountOrderByAggregateInput
   _avg?: Prisma.clinicsAvgOrderByAggregateInput
   _max?: Prisma.clinicsMaxOrderByAggregateInput
@@ -321,6 +339,7 @@ export type clinicsScalarWhereWithAggregatesInput = {
   latitude?: Prisma.FloatNullableWithAggregatesFilter<"clinics"> | number | null
   longitude?: Prisma.FloatNullableWithAggregatesFilter<"clinics"> | number | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"clinics"> | Date | string | null
+  appointment_duration?: Prisma.IntWithAggregatesFilter<"clinics"> | number
 }
 
 export type clinicsCreateInput = {
@@ -333,8 +352,10 @@ export type clinicsCreateInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   appointments?: Prisma.appointmentsCreateNestedManyWithoutClinicsInput
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsUncheckedCreateInput = {
@@ -347,8 +368,10 @@ export type clinicsUncheckedCreateInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutClinicsInput
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsUpdateInput = {
@@ -361,8 +384,10 @@ export type clinicsUpdateInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
   appointments?: Prisma.appointmentsUpdateManyWithoutClinicsNestedInput
   medical_records?: Prisma.medical_recordsUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUpdateManyWithoutClinicsNestedInput
 }
 
 export type clinicsUncheckedUpdateInput = {
@@ -375,8 +400,10 @@ export type clinicsUncheckedUpdateInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutClinicsNestedInput
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedUpdateManyWithoutClinicsNestedInput
 }
 
 export type clinicsCreateManyInput = {
@@ -389,6 +416,7 @@ export type clinicsCreateManyInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
 }
 
 export type clinicsUpdateManyMutationInput = {
@@ -401,6 +429,7 @@ export type clinicsUpdateManyMutationInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type clinicsUncheckedUpdateManyInput = {
@@ -413,6 +442,7 @@ export type clinicsUncheckedUpdateManyInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ClinicsScalarRelationFilter = {
@@ -430,12 +460,14 @@ export type clinicsCountOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
 }
 
 export type clinicsAvgOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
 }
 
 export type clinicsMaxOrderByAggregateInput = {
@@ -448,6 +480,7 @@ export type clinicsMaxOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
 }
 
 export type clinicsMinOrderByAggregateInput = {
@@ -460,12 +493,14 @@ export type clinicsMinOrderByAggregateInput = {
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
 }
 
 export type clinicsSumOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+  appointment_duration?: Prisma.SortOrder
 }
 
 export type ClinicsNullableScalarRelationFilter = {
@@ -507,6 +542,28 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type clinicsCreateNestedOneWithoutClinic_working_hoursInput = {
+  create?: Prisma.XOR<Prisma.clinicsCreateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedCreateWithoutClinic_working_hoursInput>
+  connectOrCreate?: Prisma.clinicsCreateOrConnectWithoutClinic_working_hoursInput
+  connect?: Prisma.clinicsWhereUniqueInput
+}
+
+export type clinicsUpdateOneRequiredWithoutClinic_working_hoursNestedInput = {
+  create?: Prisma.XOR<Prisma.clinicsCreateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedCreateWithoutClinic_working_hoursInput>
+  connectOrCreate?: Prisma.clinicsCreateOrConnectWithoutClinic_working_hoursInput
+  upsert?: Prisma.clinicsUpsertWithoutClinic_working_hoursInput
+  connect?: Prisma.clinicsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.clinicsUpdateToOneWithWhereWithoutClinic_working_hoursInput, Prisma.clinicsUpdateWithoutClinic_working_hoursInput>, Prisma.clinicsUncheckedUpdateWithoutClinic_working_hoursInput>
+}
+
 export type clinicsCreateNestedOneWithoutMedical_recordsInput = {
   create?: Prisma.XOR<Prisma.clinicsCreateWithoutMedical_recordsInput, Prisma.clinicsUncheckedCreateWithoutMedical_recordsInput>
   connectOrCreate?: Prisma.clinicsCreateOrConnectWithoutMedical_recordsInput
@@ -533,7 +590,9 @@ export type clinicsCreateWithoutAppointmentsInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   medical_records?: Prisma.medical_recordsCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsUncheckedCreateWithoutAppointmentsInput = {
@@ -546,7 +605,9 @@ export type clinicsUncheckedCreateWithoutAppointmentsInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsCreateOrConnectWithoutAppointmentsInput = {
@@ -575,7 +636,9 @@ export type clinicsUpdateWithoutAppointmentsInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
   medical_records?: Prisma.medical_recordsUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUpdateManyWithoutClinicsNestedInput
 }
 
 export type clinicsUncheckedUpdateWithoutAppointmentsInput = {
@@ -588,6 +651,84 @@ export type clinicsUncheckedUpdateWithoutAppointmentsInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
+  medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedUpdateManyWithoutClinicsNestedInput
+}
+
+export type clinicsCreateWithoutClinic_working_hoursInput = {
+  id?: string
+  name: string
+  address: string
+  phone_number?: string | null
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_open_24_7?: boolean | null
+  latitude?: number | null
+  longitude?: number | null
+  created_at?: Date | string | null
+  appointment_duration?: number
+  appointments?: Prisma.appointmentsCreateNestedManyWithoutClinicsInput
+  medical_records?: Prisma.medical_recordsCreateNestedManyWithoutClinicsInput
+}
+
+export type clinicsUncheckedCreateWithoutClinic_working_hoursInput = {
+  id?: string
+  name: string
+  address: string
+  phone_number?: string | null
+  rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_open_24_7?: boolean | null
+  latitude?: number | null
+  longitude?: number | null
+  created_at?: Date | string | null
+  appointment_duration?: number
+  appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutClinicsInput
+  medical_records?: Prisma.medical_recordsUncheckedCreateNestedManyWithoutClinicsInput
+}
+
+export type clinicsCreateOrConnectWithoutClinic_working_hoursInput = {
+  where: Prisma.clinicsWhereUniqueInput
+  create: Prisma.XOR<Prisma.clinicsCreateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedCreateWithoutClinic_working_hoursInput>
+}
+
+export type clinicsUpsertWithoutClinic_working_hoursInput = {
+  update: Prisma.XOR<Prisma.clinicsUpdateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedUpdateWithoutClinic_working_hoursInput>
+  create: Prisma.XOR<Prisma.clinicsCreateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedCreateWithoutClinic_working_hoursInput>
+  where?: Prisma.clinicsWhereInput
+}
+
+export type clinicsUpdateToOneWithWhereWithoutClinic_working_hoursInput = {
+  where?: Prisma.clinicsWhereInput
+  data: Prisma.XOR<Prisma.clinicsUpdateWithoutClinic_working_hoursInput, Prisma.clinicsUncheckedUpdateWithoutClinic_working_hoursInput>
+}
+
+export type clinicsUpdateWithoutClinic_working_hoursInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
+  appointments?: Prisma.appointmentsUpdateManyWithoutClinicsNestedInput
+  medical_records?: Prisma.medical_recordsUpdateManyWithoutClinicsNestedInput
+}
+
+export type clinicsUncheckedUpdateWithoutClinic_working_hoursInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
+  appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutClinicsNestedInput
   medical_records?: Prisma.medical_recordsUncheckedUpdateManyWithoutClinicsNestedInput
 }
 
@@ -601,7 +742,9 @@ export type clinicsCreateWithoutMedical_recordsInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   appointments?: Prisma.appointmentsCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsUncheckedCreateWithoutMedical_recordsInput = {
@@ -614,7 +757,9 @@ export type clinicsUncheckedCreateWithoutMedical_recordsInput = {
   latitude?: number | null
   longitude?: number | null
   created_at?: Date | string | null
+  appointment_duration?: number
   appointments?: Prisma.appointmentsUncheckedCreateNestedManyWithoutClinicsInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedCreateNestedManyWithoutClinicsInput
 }
 
 export type clinicsCreateOrConnectWithoutMedical_recordsInput = {
@@ -643,7 +788,9 @@ export type clinicsUpdateWithoutMedical_recordsInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
   appointments?: Prisma.appointmentsUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUpdateManyWithoutClinicsNestedInput
 }
 
 export type clinicsUncheckedUpdateWithoutMedical_recordsInput = {
@@ -656,7 +803,9 @@ export type clinicsUncheckedUpdateWithoutMedical_recordsInput = {
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  appointment_duration?: Prisma.IntFieldUpdateOperationsInput | number
   appointments?: Prisma.appointmentsUncheckedUpdateManyWithoutClinicsNestedInput
+  clinic_working_hours?: Prisma.clinic_working_hoursUncheckedUpdateManyWithoutClinicsNestedInput
 }
 
 
@@ -667,11 +816,13 @@ export type clinicsUncheckedUpdateWithoutMedical_recordsInput = {
 export type ClinicsCountOutputType = {
   appointments: number
   medical_records: number
+  clinic_working_hours: number
 }
 
 export type ClinicsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | ClinicsCountOutputTypeCountAppointmentsArgs
   medical_records?: boolean | ClinicsCountOutputTypeCountMedical_recordsArgs
+  clinic_working_hours?: boolean | ClinicsCountOutputTypeCountClinic_working_hoursArgs
 }
 
 /**
@@ -698,6 +849,13 @@ export type ClinicsCountOutputTypeCountMedical_recordsArgs<ExtArgs extends runti
   where?: Prisma.medical_recordsWhereInput
 }
 
+/**
+ * ClinicsCountOutputType without action
+ */
+export type ClinicsCountOutputTypeCountClinic_working_hoursArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.clinic_working_hoursWhereInput
+}
+
 
 export type clinicsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -709,8 +867,10 @@ export type clinicsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   latitude?: boolean
   longitude?: boolean
   created_at?: boolean
+  appointment_duration?: boolean
   appointments?: boolean | Prisma.clinics$appointmentsArgs<ExtArgs>
   medical_records?: boolean | Prisma.clinics$medical_recordsArgs<ExtArgs>
+  clinic_working_hours?: boolean | Prisma.clinics$clinic_working_hoursArgs<ExtArgs>
   _count?: boolean | Prisma.ClinicsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clinics"]>
 
@@ -724,6 +884,7 @@ export type clinicsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   latitude?: boolean
   longitude?: boolean
   created_at?: boolean
+  appointment_duration?: boolean
 }, ExtArgs["result"]["clinics"]>
 
 export type clinicsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -736,6 +897,7 @@ export type clinicsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   latitude?: boolean
   longitude?: boolean
   created_at?: boolean
+  appointment_duration?: boolean
 }, ExtArgs["result"]["clinics"]>
 
 export type clinicsSelectScalar = {
@@ -748,12 +910,14 @@ export type clinicsSelectScalar = {
   latitude?: boolean
   longitude?: boolean
   created_at?: boolean
+  appointment_duration?: boolean
 }
 
-export type clinicsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "phone_number" | "rating" | "is_open_24_7" | "latitude" | "longitude" | "created_at", ExtArgs["result"]["clinics"]>
+export type clinicsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "phone_number" | "rating" | "is_open_24_7" | "latitude" | "longitude" | "created_at" | "appointment_duration", ExtArgs["result"]["clinics"]>
 export type clinicsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.clinics$appointmentsArgs<ExtArgs>
   medical_records?: boolean | Prisma.clinics$medical_recordsArgs<ExtArgs>
+  clinic_working_hours?: boolean | Prisma.clinics$clinic_working_hoursArgs<ExtArgs>
   _count?: boolean | Prisma.ClinicsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type clinicsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -764,6 +928,7 @@ export type $clinicsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     appointments: Prisma.$appointmentsPayload<ExtArgs>[]
     medical_records: Prisma.$medical_recordsPayload<ExtArgs>[]
+    clinic_working_hours: Prisma.$clinic_working_hoursPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -775,6 +940,7 @@ export type $clinicsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     latitude: number | null
     longitude: number | null
     created_at: Date | null
+    appointment_duration: number
   }, ExtArgs["result"]["clinics"]>
   composites: {}
 }
@@ -1171,6 +1337,7 @@ export interface Prisma__clinicsClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   appointments<T extends Prisma.clinics$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.clinics$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$appointmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   medical_records<T extends Prisma.clinics$medical_recordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.clinics$medical_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$medical_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clinic_working_hours<T extends Prisma.clinics$clinic_working_hoursArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.clinics$clinic_working_hoursArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$clinic_working_hoursPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1209,6 +1376,7 @@ export interface clinicsFieldRefs {
   readonly latitude: Prisma.FieldRef<"clinics", 'Float'>
   readonly longitude: Prisma.FieldRef<"clinics", 'Float'>
   readonly created_at: Prisma.FieldRef<"clinics", 'DateTime'>
+  readonly appointment_duration: Prisma.FieldRef<"clinics", 'Int'>
 }
     
 
@@ -1642,6 +1810,30 @@ export type clinics$medical_recordsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.Medical_recordsScalarFieldEnum | Prisma.Medical_recordsScalarFieldEnum[]
+}
+
+/**
+ * clinics.clinic_working_hours
+ */
+export type clinics$clinic_working_hoursArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the clinic_working_hours
+   */
+  select?: Prisma.clinic_working_hoursSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the clinic_working_hours
+   */
+  omit?: Prisma.clinic_working_hoursOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.clinic_working_hoursInclude<ExtArgs> | null
+  where?: Prisma.clinic_working_hoursWhereInput
+  orderBy?: Prisma.clinic_working_hoursOrderByWithRelationInput | Prisma.clinic_working_hoursOrderByWithRelationInput[]
+  cursor?: Prisma.clinic_working_hoursWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Clinic_working_hoursScalarFieldEnum | Prisma.Clinic_working_hoursScalarFieldEnum[]
 }
 
 /**

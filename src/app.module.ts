@@ -5,9 +5,10 @@ import { AppService } from "./app.service.js";
 import { PrismaModule } from "./prisma.module.js";
 import { AuthModule } from './auth/auth.module.js';
 import { PetsModule } from './pets/pets.module.js';
+import { ClinicsModule } from './clinics/clinics.module.js';
 
 @Module({
-  imports: [PrismaModule, AuthModule, PetsModule, ConfigModule.forRoot()],
+  imports: [PrismaModule, AuthModule, PetsModule, ConfigModule.forRoot(), ClinicsModule],
   controllers: [AppController],
   providers: [AppService],
 })

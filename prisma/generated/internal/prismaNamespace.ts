@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   appointments: 'appointments',
   clinics: 'clinics',
+  clinic_working_hours: 'clinic_working_hours',
   medical_records: 'medical_records',
   pets: 'pets',
   profiles: 'profiles',
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "appointments" | "clinics" | "medical_records" | "pets" | "profiles" | "vaccinations"
+    modelProps: "appointments" | "clinics" | "clinic_working_hours" | "medical_records" | "pets" | "profiles" | "vaccinations"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,6 +555,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.clinicsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClinicsCountAggregateOutputType> | number
+        }
+      }
+    }
+    clinic_working_hours: {
+      payload: Prisma.$clinic_working_hoursPayload<ExtArgs>
+      fields: Prisma.clinic_working_hoursFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.clinic_working_hoursFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.clinic_working_hoursFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        findFirst: {
+          args: Prisma.clinic_working_hoursFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.clinic_working_hoursFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        findMany: {
+          args: Prisma.clinic_working_hoursFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>[]
+        }
+        create: {
+          args: Prisma.clinic_working_hoursCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        createMany: {
+          args: Prisma.clinic_working_hoursCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.clinic_working_hoursCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>[]
+        }
+        delete: {
+          args: Prisma.clinic_working_hoursDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        update: {
+          args: Prisma.clinic_working_hoursUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        deleteMany: {
+          args: Prisma.clinic_working_hoursDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.clinic_working_hoursUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.clinic_working_hoursUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>[]
+        }
+        upsert: {
+          args: Prisma.clinic_working_hoursUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinic_working_hoursPayload>
+        }
+        aggregate: {
+          args: Prisma.Clinic_working_hoursAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClinic_working_hours>
+        }
+        groupBy: {
+          args: Prisma.clinic_working_hoursGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Clinic_working_hoursGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.clinic_working_hoursCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Clinic_working_hoursCountAggregateOutputType> | number
         }
       }
     }
@@ -916,10 +991,25 @@ export const ClinicsScalarFieldEnum = {
   is_open_24_7: 'is_open_24_7',
   latitude: 'latitude',
   longitude: 'longitude',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  appointment_duration: 'appointment_duration'
 } as const
 
 export type ClinicsScalarFieldEnum = (typeof ClinicsScalarFieldEnum)[keyof typeof ClinicsScalarFieldEnum]
+
+
+export const Clinic_working_hoursScalarFieldEnum = {
+  id: 'id',
+  clinic_id: 'clinic_id',
+  day_of_week: 'day_of_week',
+  is_closed: 'is_closed',
+  open_time: 'open_time',
+  close_time: 'close_time',
+  break_start: 'break_start',
+  break_end: 'break_end'
+} as const
+
+export type Clinic_working_hoursScalarFieldEnum = (typeof Clinic_working_hoursScalarFieldEnum)[keyof typeof Clinic_working_hoursScalarFieldEnum]
 
 
 export const Medical_recordsScalarFieldEnum = {
@@ -1090,6 +1180,20 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'record_type'
  */
 export type Enumrecord_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'record_type'>
@@ -1114,20 +1218,6 @@ export type Enumvaccine_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'vaccine_status[]'
  */
 export type ListEnumvaccine_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'vaccine_status[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 /**
@@ -1227,6 +1317,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   appointments?: Prisma.appointmentsOmit
   clinics?: Prisma.clinicsOmit
+  clinic_working_hours?: Prisma.clinic_working_hoursOmit
   medical_records?: Prisma.medical_recordsOmit
   pets?: Prisma.petsOmit
   profiles?: Prisma.profilesOmit

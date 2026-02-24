@@ -10,6 +10,7 @@
  */
 export type * from './models/appointments.js'
 export type * from './models/clinics.js'
+export type * from './models/clinic_working_hours.js'
 export type * from './models/medical_records.js'
 export type * from './models/pets.js'
 export type * from './models/profiles.js'

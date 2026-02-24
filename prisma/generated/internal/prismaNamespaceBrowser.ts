@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   appointments: 'appointments',
   clinics: 'clinics',
+  clinic_working_hours: 'clinic_working_hours',
   medical_records: 'medical_records',
   pets: 'pets',
   profiles: 'profiles',
@@ -99,10 +100,25 @@ export const ClinicsScalarFieldEnum = {
   is_open_24_7: 'is_open_24_7',
   latitude: 'latitude',
   longitude: 'longitude',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  appointment_duration: 'appointment_duration'
 } as const
 
 export type ClinicsScalarFieldEnum = (typeof ClinicsScalarFieldEnum)[keyof typeof ClinicsScalarFieldEnum]
+
+
+export const Clinic_working_hoursScalarFieldEnum = {
+  id: 'id',
+  clinic_id: 'clinic_id',
+  day_of_week: 'day_of_week',
+  is_closed: 'is_closed',
+  open_time: 'open_time',
+  close_time: 'close_time',
+  break_start: 'break_start',
+  break_end: 'break_end'
+} as const
+
+export type Clinic_working_hoursScalarFieldEnum = (typeof Clinic_working_hoursScalarFieldEnum)[keyof typeof Clinic_working_hoursScalarFieldEnum]
 
 
 export const Medical_recordsScalarFieldEnum = {

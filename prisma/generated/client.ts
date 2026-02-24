@@ -50,6 +50,11 @@ export type appointments = Prisma.appointmentsModel
  */
 export type clinics = Prisma.clinicsModel
 /**
+ * Model clinic_working_hours
+ * 
+ */
+export type clinic_working_hours = Prisma.clinic_working_hoursModel
+/**
  * Model medical_records
  * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
  */
