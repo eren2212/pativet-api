@@ -18,6 +18,7 @@ export class ClinicResponseDto {
     is_open_24_7: boolean;
     latitude: number | null;
     longitude: number | null;
+    about: string | null;
     appointment_duration: number;
     working_hours: ClinicWorkingHoursDto[]; // İlişkisel tabloyu buraya bağlıyoruz
 

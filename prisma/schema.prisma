@@ -33,6 +33,7 @@ model clinics {
   name         String
   address      String
   phone_number String?
+  about        String?
   rating       Decimal?  @default(0.0) @db.Decimal(2, 1)
   is_open_24_7 Boolean?  @default(false)
   latitude     Float?

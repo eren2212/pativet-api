@@ -987,6 +987,7 @@ export const ClinicsScalarFieldEnum = {
   name: 'name',
   address: 'address',
   phone_number: 'phone_number',
+  about: 'about',
   rating: 'rating',
   is_open_24_7: 'is_open_24_7',
   latitude: 'latitude',

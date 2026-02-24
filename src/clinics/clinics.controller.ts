@@ -1,7 +1,7 @@
-import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, Query, ValidationPipe } from '@nestjs/common';
 import { ClinicsService } from './clinics.service.js';
 import { GetClinicsFilterDto } from './dto/get-clinics-filter.dto.js';
-// import { ClinicResponseDto } from './dto/clinic-response.dto';
+
 
 @Controller('clinics')
 export class ClinicsController {
@@ -14,5 +14,11 @@ export class ClinicsController {
     ) {
         // Controller sadece gelen veriyi temizler ve Service'e paslar. İşin beyni Service'dir.
         return this.clinicsService.findAll(filterDto);
+    }
+
+
+    @Get(':id')
+    async findOne(@Param('id', ParseUUIDPipe) id: string) {
+        return this.clinicsService.findOne(id);
     }
 }

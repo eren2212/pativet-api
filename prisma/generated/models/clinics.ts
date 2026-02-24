@@ -45,6 +45,7 @@ export type ClinicsMinAggregateOutputType = {
   name: string | null
   address: string | null
   phone_number: string | null
+  about: string | null
   rating: runtime.Decimal | null
   is_open_24_7: boolean | null
   latitude: number | null
@@ -58,6 +59,7 @@ export type ClinicsMaxAggregateOutputType = {
   name: string | null
   address: string | null
   phone_number: string | null
+  about: string | null
   rating: runtime.Decimal | null
   is_open_24_7: boolean | null
   latitude: number | null
@@ -71,6 +73,7 @@ export type ClinicsCountAggregateOutputType = {
   name: number
   address: number
   phone_number: number
+  about: number
   rating: number
   is_open_24_7: number
   latitude: number
@@ -100,6 +103,7 @@ export type ClinicsMinAggregateInputType = {
   name?: true
   address?: true
   phone_number?: true
+  about?: true
   rating?: true
   is_open_24_7?: true
   latitude?: true
@@ -113,6 +117,7 @@ export type ClinicsMaxAggregateInputType = {
   name?: true
   address?: true
   phone_number?: true
+  about?: true
   rating?: true
   is_open_24_7?: true
   latitude?: true
@@ -126,6 +131,7 @@ export type ClinicsCountAggregateInputType = {
   name?: true
   address?: true
   phone_number?: true
+  about?: true
   rating?: true
   is_open_24_7?: true
   latitude?: true
@@ -197,11 +203,11 @@ export type ClinicsAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 export type GetClinicsAggregateType<T extends ClinicsAggregateArgs> = {
-      [P in keyof T & keyof AggregateClinics]: P extends '_count' | 'count'
-    ? T[P] extends true
-      ? number
-      : Prisma.GetScalarType<T[P], AggregateClinics[P]>
-    : Prisma.GetScalarType<T[P], AggregateClinics[P]>
+  [P in keyof T & keyof AggregateClinics]: P extends '_count' | 'count'
+  ? T[P] extends true
+  ? number
+  : Prisma.GetScalarType<T[P], AggregateClinics[P]>
+  : Prisma.GetScalarType<T[P], AggregateClinics[P]>
 }
 
 
@@ -226,6 +232,7 @@ export type ClinicsGroupByOutputType = {
   name: string
   address: string
   phone_number: string | null
+  about: string | null
   rating: runtime.Decimal | null
   is_open_24_7: boolean | null
   latitude: number | null
@@ -242,15 +249,15 @@ export type ClinicsGroupByOutputType = {
 type GetClinicsGroupByPayload<T extends clinicsGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ClinicsGroupByOutputType, T['by']> &
-      {
-        [P in ((keyof T) & (keyof ClinicsGroupByOutputType))]: P extends '_count'
-          ? T[P] extends boolean
-            ? number
-            : Prisma.GetScalarType<T[P], ClinicsGroupByOutputType[P]>
-          : Prisma.GetScalarType<T[P], ClinicsGroupByOutputType[P]>
-      }
-    >
+    {
+      [P in ((keyof T) & (keyof ClinicsGroupByOutputType))]: P extends '_count'
+      ? T[P] extends boolean
+      ? number
+      : Prisma.GetScalarType<T[P], ClinicsGroupByOutputType[P]>
+      : Prisma.GetScalarType<T[P], ClinicsGroupByOutputType[P]>
+    }
   >
+>
 
 
 
@@ -262,6 +269,7 @@ export type clinicsWhereInput = {
   name?: Prisma.StringFilter<"clinics"> | string
   address?: Prisma.StringFilter<"clinics"> | string
   phone_number?: Prisma.StringNullableFilter<"clinics"> | string | null
+  about?: Prisma.StringNullableFilter<"clinics"> | string | null
   rating?: Prisma.DecimalNullableFilter<"clinics"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.BoolNullableFilter<"clinics"> | boolean | null
   latitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
@@ -278,6 +286,7 @@ export type clinicsOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   phone_number?: Prisma.SortOrderInput | Prisma.SortOrder
+  about?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   is_open_24_7?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -297,6 +306,7 @@ export type clinicsWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"clinics"> | string
   address?: Prisma.StringFilter<"clinics"> | string
   phone_number?: Prisma.StringNullableFilter<"clinics"> | string | null
+  about?: Prisma.StringNullableFilter<"clinics"> | string | null
   rating?: Prisma.DecimalNullableFilter<"clinics"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.BoolNullableFilter<"clinics"> | boolean | null
   latitude?: Prisma.FloatNullableFilter<"clinics"> | number | null
@@ -313,6 +323,7 @@ export type clinicsOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   phone_number?: Prisma.SortOrderInput | Prisma.SortOrder
+  about?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   is_open_24_7?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -334,6 +345,7 @@ export type clinicsScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"clinics"> | string
   address?: Prisma.StringWithAggregatesFilter<"clinics"> | string
   phone_number?: Prisma.StringNullableWithAggregatesFilter<"clinics"> | string | null
+  about?: Prisma.StringNullableWithAggregatesFilter<"clinics"> | string | null
   rating?: Prisma.DecimalNullableWithAggregatesFilter<"clinics"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.BoolNullableWithAggregatesFilter<"clinics"> | boolean | null
   latitude?: Prisma.FloatNullableWithAggregatesFilter<"clinics"> | number | null
@@ -347,6 +359,7 @@ export type clinicsCreateInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -363,6 +376,7 @@ export type clinicsUncheckedCreateInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -379,6 +393,7 @@ export type clinicsUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -395,6 +410,7 @@ export type clinicsUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -411,6 +427,7 @@ export type clinicsCreateManyInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -424,6 +441,7 @@ export type clinicsUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -437,6 +455,7 @@ export type clinicsUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -455,6 +474,7 @@ export type clinicsCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   is_open_24_7?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
@@ -475,6 +495,7 @@ export type clinicsMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   is_open_24_7?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
@@ -488,6 +509,7 @@ export type clinicsMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
+  about?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   is_open_24_7?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
@@ -585,6 +607,7 @@ export type clinicsCreateWithoutAppointmentsInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -600,6 +623,7 @@ export type clinicsUncheckedCreateWithoutAppointmentsInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -631,6 +655,7 @@ export type clinicsUpdateWithoutAppointmentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -646,6 +671,7 @@ export type clinicsUncheckedUpdateWithoutAppointmentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -661,6 +687,7 @@ export type clinicsCreateWithoutClinic_working_hoursInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -676,6 +703,7 @@ export type clinicsUncheckedCreateWithoutClinic_working_hoursInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -707,6 +735,7 @@ export type clinicsUpdateWithoutClinic_working_hoursInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -722,6 +751,7 @@ export type clinicsUncheckedUpdateWithoutClinic_working_hoursInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -737,6 +767,7 @@ export type clinicsCreateWithoutMedical_recordsInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -752,6 +783,7 @@ export type clinicsUncheckedCreateWithoutMedical_recordsInput = {
   name: string
   address: string
   phone_number?: string | null
+  about?: string | null
   rating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: boolean | null
   latitude?: number | null
@@ -783,6 +815,7 @@ export type clinicsUpdateWithoutMedical_recordsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -798,6 +831,7 @@ export type clinicsUncheckedUpdateWithoutMedical_recordsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  about?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_open_24_7?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -862,6 +896,7 @@ export type clinicsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   address?: boolean
   phone_number?: boolean
+  about?: boolean
   rating?: boolean
   is_open_24_7?: boolean
   latitude?: boolean
@@ -879,6 +914,7 @@ export type clinicsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   address?: boolean
   phone_number?: boolean
+  about?: boolean
   rating?: boolean
   is_open_24_7?: boolean
   latitude?: boolean
@@ -892,6 +928,7 @@ export type clinicsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   address?: boolean
   phone_number?: boolean
+  about?: boolean
   rating?: boolean
   is_open_24_7?: boolean
   latitude?: boolean
@@ -905,6 +942,7 @@ export type clinicsSelectScalar = {
   name?: boolean
   address?: boolean
   phone_number?: boolean
+  about?: boolean
   rating?: boolean
   is_open_24_7?: boolean
   latitude?: boolean
@@ -913,7 +951,7 @@ export type clinicsSelectScalar = {
   appointment_duration?: boolean
 }
 
-export type clinicsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "phone_number" | "rating" | "is_open_24_7" | "latitude" | "longitude" | "created_at" | "appointment_duration", ExtArgs["result"]["clinics"]>
+export type clinicsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "phone_number" | "about" | "rating" | "is_open_24_7" | "latitude" | "longitude" | "created_at" | "appointment_duration", ExtArgs["result"]["clinics"]>
 export type clinicsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.clinics$appointmentsArgs<ExtArgs>
   medical_records?: boolean | Prisma.clinics$medical_recordsArgs<ExtArgs>
@@ -935,6 +973,7 @@ export type $clinicsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     address: string
     phone_number: string | null
+    about: string
     rating: runtime.Decimal | null
     is_open_24_7: boolean | null
     latitude: number | null
@@ -1213,10 +1252,10 @@ export interface clinicsDelegate<ExtArgs extends runtime.Types.Extensions.Intern
     args?: Prisma.Subset<T, clinicsCountArgs>,
   ): Prisma.PrismaPromise<
     T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], ClinicsCountAggregateOutputType>
-      : number
+    ? T['select'] extends true
+    ? number
+    : Prisma.GetScalarType<T['select'], ClinicsCountAggregateOutputType>
+    : number
   >
 
   /**
@@ -1270,8 +1309,8 @@ export interface clinicsDelegate<ExtArgs extends runtime.Types.Extensions.Intern
       Prisma.Extends<'take', Prisma.Keys<T>>
     >,
     OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: clinicsGroupByArgs['orderBy'] }
-      : { orderBy?: clinicsGroupByArgs['orderBy'] },
+    ? { orderBy: clinicsGroupByArgs['orderBy'] }
+    : { orderBy?: clinicsGroupByArgs['orderBy'] },
     OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
@@ -1282,49 +1321,49 @@ export interface clinicsDelegate<ExtArgs extends runtime.Types.Extensions.Intern
     ? `Error: "by" must not be empty.`
     : HavingValid extends Prisma.False
     ? {
-        [P in HavingFields]: P extends ByFields
-          ? never
-          : P extends string
-          ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-          : [
-              Error,
-              'Field ',
-              P,
-              ` in "having" needs to be provided in "by"`,
-            ]
-      }[HavingFields]
+      [P in HavingFields]: P extends ByFields
+      ? never
+      : P extends string
+      ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+      : [
+        Error,
+        'Field ',
+        P,
+        ` in "having" needs to be provided in "by"`,
+      ]
+    }[HavingFields]
     : 'take' extends Prisma.Keys<T>
     ? 'orderBy' extends Prisma.Keys<T>
-      ? ByValid extends Prisma.True
-        ? {}
-        : {
-            [P in OrderFields]: P extends ByFields
-              ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-          }[OrderFields]
-      : 'Error: If you provide "take", you also need to provide "orderBy"'
+    ? ByValid extends Prisma.True
+    ? {}
+    : {
+      [P in OrderFields]: P extends ByFields
+      ? never
+      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]
+    : 'Error: If you provide "take", you also need to provide "orderBy"'
     : 'skip' extends Prisma.Keys<T>
     ? 'orderBy' extends Prisma.Keys<T>
-      ? ByValid extends Prisma.True
-        ? {}
-        : {
-            [P in OrderFields]: P extends ByFields
-              ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-          }[OrderFields]
-      : 'Error: If you provide "skip", you also need to provide "orderBy"'
+    ? ByValid extends Prisma.True
+    ? {}
+    : {
+      [P in OrderFields]: P extends ByFields
+      ? never
+      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]
+    : 'Error: If you provide "skip", you also need to provide "orderBy"'
     : ByValid extends Prisma.True
     ? {}
     : {
-        [P in OrderFields]: P extends ByFields
-          ? never
-          : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-      }[OrderFields]
+      [P in OrderFields]: P extends ByFields
+      ? never
+      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]
   >(args: Prisma.SubsetIntersection<T, clinicsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClinicsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-/**
- * Fields of the clinics model
- */
-readonly fields: clinicsFieldRefs;
+  /**
+   * Fields of the clinics model
+   */
+  readonly fields: clinicsFieldRefs;
 }
 
 /**
@@ -1371,6 +1410,7 @@ export interface clinicsFieldRefs {
   readonly name: Prisma.FieldRef<"clinics", 'String'>
   readonly address: Prisma.FieldRef<"clinics", 'String'>
   readonly phone_number: Prisma.FieldRef<"clinics", 'String'>
+  readonly about: Prisma.FieldRef<"clinics", 'String'>
   readonly rating: Prisma.FieldRef<"clinics", 'Decimal'>
   readonly is_open_24_7: Prisma.FieldRef<"clinics", 'Boolean'>
   readonly latitude: Prisma.FieldRef<"clinics", 'Float'>
@@ -1378,7 +1418,7 @@ export interface clinicsFieldRefs {
   readonly created_at: Prisma.FieldRef<"clinics", 'DateTime'>
   readonly appointment_duration: Prisma.FieldRef<"clinics", 'Int'>
 }
-    
+
 
 // Custom InputTypes
 /**
